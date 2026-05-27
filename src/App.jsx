@@ -3,12 +3,42 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import './App.css'
+import useOnlineStatus from "./hooks/useOnlineStatus.ts";
+import InstallPrompt from "./components/InstallPrompt.jsx";
+import Offline from "./components/Offline.jsx";
 
 function App() {
   const [count, setCount] = useState(0)
+  const isOnline = useOnlineStatus();
 
   return (
     <>
+      {!isOnline && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          width: '100%',
+          backgroundColor: '#ff6b6b',
+          color: 'white',
+          padding: '10px',
+          textAlign: 'center',
+          zIndex: 1000
+        }}>
+          ⚠️ You are currently offline
+        </div>
+      )}
+
+      {/* Show Offline component when offline */}
+      {!isOnline ? (
+        <Offline />
+      ) : (
+        <>
+          <h1>My First PWA</h1>
+          <p>You're online! All features are available.</p>
+          {/* Add the rest of your app content here */}
+        </>
+      )}
+      <InstallPrompt />
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
