@@ -59,27 +59,10 @@ function InstallPrompt() {
   }
 
   return (
-    <div style={{
-      position: 'fixed',
-      bottom: '20px',
-      right: '20px',
-      zIndex: 1000
-    }}>
+    <div className="fixed bottom-5 right-5 z-1000">
       <button
         onClick={handleInstall}
-        style={{
-          backgroundColor: '#4CAF50',
-          color: 'white',
-          padding: '15px 30px',
-          border: 'none',
-          borderRadius: '25px',
-          fontSize: '16px',
-          cursor: 'pointer',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '10px'
-        }}
+        className="bg-[#4CAF50] text-white px-7 py-3.5 border-none rounded-[25px] text-base cursor-pointer shadow-[0_4px_6px_rgba(0,0,0,0.1)] flex items-center gap-2.5 hover:opacity-90"
       >
         📱 Install App
       </button>

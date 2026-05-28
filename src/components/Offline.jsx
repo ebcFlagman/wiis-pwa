@@ -2,26 +2,13 @@ import React from 'react';
 
 function Offline() {
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100vh',
-      textAlign: 'center',
-      padding: '20px'
-    }}>
-      <h1>🔌 Offline Mode</h1>
+    <div className="flex flex-col items-center justify-center flex-grow text-center p-5">
+      <h1 className="text-4xl font-bold mb-4">🔌 Offline Mode</h1>
       <p>Please check your internet connection.</p>
       <p>Some features are still available offline.</p>
       <button
         onClick={() => window.location.reload()}
-        style={{
-          marginTop: '20px',
-          padding: '10px 20px',
-          fontSize: '16px',
-          cursor: 'pointer'
-        }}
+        className="mt-5 px-5 py-2.5 text-base cursor-pointer bg-accent text-white rounded-md hover:opacity-90"
       >
         Try Again
       </button>
