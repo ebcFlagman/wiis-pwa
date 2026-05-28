@@ -27,7 +27,7 @@ export function SettingsDialog() {
             [key]: type === 'number' ? Number(e.target.value) : e.target.value,
           }))
         }
-        className="bg-white/10 text-white rounded-lg px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-red-500 placeholder:text-white/30"
+        className="bg-white/10 text-white rounded-lg px-3 py-2.5 text-sm outline-none border border-white/10 focus:border-red-500 focus:ring-0 placeholder:text-white/30 transition-colors"
       />
     </label>
   );
