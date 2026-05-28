@@ -1,0 +1,65 @@
+{
+  "loading": "Chargement…",
+  "round": "Manche {{count}}",
+  "goal": "Objectif : {{goal}}",
+  "close": "Fermer",
+  "cancel": "Annuler",
+  "save": "Enregistrer",
+  "newGame": "Nouvelle partie",
+  "menu": {
+    "scoreInput": "💯 Saisir les points",
+    "claims": "✋ Annonces",
+    "match": "💥 Match (257)",
+    "undo": "↩ Annuler",
+    "newGame": "🔄 Nouvelle partie",
+    "settings": "⚙️ Paramètres",
+    "about": "ℹ️ À propos"
+  },
+  "scoreInput": {
+    "title": "{{team}} – Points",
+    "confirm": "Continuer",
+    "opponentScore": "{{team}} : {{score}} points",
+    "maxScore": "Max. {{max}} points"
+  },
+  "claims": {
+    "title": "{{team}} – Annonces"
+  },
+  "multiplier": {
+    "title": "{{team}} – Multiplicateur",
+    "scoreLabel": "{{mode}} : {{score}} points",
+    "mode": {
+      "WRITE": "Jouer",
+      "CLAIM": "Annonces",
+      "MATCH": "Match"
+    }
+  },
+  "result": {
+    "title": "Partie terminée !",
+    "won": "a gagné !",
+    "newGame": "Nouvelle partie",
+    "played": "Joués :",
+    "claimed": "Annoncés :"
+  },
+  "settings": {
+    "title": "Paramètres",
+    "goal": "Points objectif",
+    "team1": "Équipe 1",
+    "team2": "Équipe 2",
+    "player": "Joueur {{number}}",
+    "language": "Langue"
+  },
+  "confirmNewGame": {
+    "title": "Nouvelle partie",
+    "reset": "Réinitialiser",
+    "message": "Voulez-vous vraiment démarrer une nouvelle partie ? Tous les points seront réinitialisés."
+  },
+  "about": {
+    "title": "À propos",
+    "subtitle": "Tableau de Jass",
+    "developedBy": "Développé par",
+    "reportBug": "Signaler un bug"
+  },
+  "teamPanel": {
+    "openMenu": "Ouvrir le menu de {{team}}"
+  }
+}

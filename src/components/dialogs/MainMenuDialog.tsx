@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useStore } from '@/store/gameStore';
 import { Dialog, MenuButton } from '@/components/ui/Dialog';
 
@@ -14,6 +15,8 @@ export function MainMenuDialog() {
   const entries = useStore((s) => s.entries);
   const currentRound = useStore((s) => s.currentRound);
 
+  const { t } = useTranslation();
+
   if (dialog.type !== 'mainMenu') return null;
   const { team } = dialog;
 
@@ -27,27 +30,27 @@ export function MainMenuDialog() {
     <Dialog title={label} onClose={closeDialog}>
       <div className="flex flex-col gap-1">
         <MenuButton data-testid="menu-score-input" onClick={() => openScoreInput(team)}>
-          💯 Punkte eingeben
+          {t('menu.scoreInput')}
         </MenuButton>
         <MenuButton data-testid="menu-claims" onClick={() => openClaims(team)}>
-          ✋ Weisen
+          {t('menu.claims')}
         </MenuButton>
         <MenuButton data-testid="menu-match" onClick={() => openMultiplier(team, 'MATCH', 257)}>
-          💥 Match (257)
+          {t('menu.match')}
         </MenuButton>
         <div className="my-1 border-t border-white/10" />
         <MenuButton data-testid="menu-undo" onClick={undo} variant={hasAnything ? 'default' : 'danger'}>
-          ↩ Rückgängig
+          {t('menu.undo')}
         </MenuButton>
         <MenuButton data-testid="menu-new-game" onClick={confirmNewGame} variant="danger">
-          🔄 Neues Spiel
+          {t('menu.newGame')}
         </MenuButton>
         <div className="my-1 border-t border-white/10" />
         <MenuButton data-testid="menu-settings" onClick={openSettings}>
-          ⚙️ Einstellungen
+          {t('menu.settings')}
         </MenuButton>
         <MenuButton data-testid="menu-about" onClick={openAbout}>
-          ℹ️ Info
+          {t('menu.about')}
         </MenuButton>
       </div>
     </Dialog>

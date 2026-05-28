@@ -1,7 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import { useStore } from '@/store/gameStore';
 import { Dialog, ActionButton } from '@/components/ui/Dialog';
 
 export function ResultDialog() {
+  const { t } = useTranslation();
   const dialog = useStore((s) => s.dialog);
   const newGame = useStore((s) => s.newGame);
   const getTotal = useStore((s) => s.getTotal);
@@ -26,14 +28,14 @@ export function ResultDialog() {
 
   return (
     <Dialog
-      title="Spiel beendet!"
-      footer={<ActionButton onClick={newGame}>Neues Spiel</ActionButton>}
+      title={t('result.title')}
+      footer={<ActionButton onClick={newGame}>{t('result.newGame')}</ActionButton>}
     >
       <div className="flex flex-col items-center gap-4 py-2">
         <div className="text-center">
           <div className="text-4xl mb-1">🏆</div>
           <div data-testid="result-winner" className="text-2xl font-bold text-red-400">{winnerLabel}</div>
-          <div className="text-white/60 text-sm mt-1">hat gewonnen!</div>
+          <div className="text-white/60 text-sm mt-1">{t('result.won')}</div>
         </div>
 
         <div className="w-full border-t border-white/10 pt-4 flex flex-col gap-2">
@@ -53,6 +55,7 @@ function ScoreRow({ label, score, played, claimed, isWinner, goal }: {
   isWinner: boolean;
   goal: number;
 }) {
+  const { t } = useTranslation();
   return (
     <div className={`px-3 py-2 rounded-lg ${isWinner ? 'bg-red-600/20' : 'bg-white/5'}`}>
       <div className="flex items-center justify-between">
@@ -65,8 +68,8 @@ function ScoreRow({ label, score, played, claimed, isWinner, goal }: {
         </div>
       </div>
       <div className="flex gap-4 mt-1">
-        <span className="text-white/40 text-xs">Gespielt: <span className="text-white/60">{played}</span></span>
-        <span className="text-white/40 text-xs">Gewiesen: <span className="text-white/60">{claimed}</span></span>
+        <span className="text-white/40 text-xs">{t('result.played')} <span className="text-white/60">{played}</span></span>
+        <span className="text-white/40 text-xs">{t('result.claimed')} <span className="text-white/60">{claimed}</span></span>
       </div>
     </div>
   );

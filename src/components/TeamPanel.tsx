@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useStore } from '@/store/gameStore';
 
 interface Props {
@@ -6,6 +7,7 @@ interface Props {
 }
 
 export function TeamPanel({ team, flipped }: Props) {
+  const { t } = useTranslation();
   const openMenu = useStore((s) => s.openMenu);
   const getTotal = useStore((s) => s.getTotal);
   const label = useStore((s) =>
@@ -22,7 +24,7 @@ export function TeamPanel({ team, flipped }: Props) {
       className="team-panel flex-1 flex flex-col items-center justify-center w-full cursor-pointer relative overflow-hidden"
       style={{ transform: flipped ? 'rotate(180deg)' : undefined }}
       onClick={() => openMenu(team)}
-      aria-label={`${label} Menü öffnen`}
+      aria-label={t('teamPanel.openMenu', { team: label })}
     >
       <div
         className="absolute bottom-0 left-0 right-0 h-1 bg-red-500/40 transition-all duration-500"

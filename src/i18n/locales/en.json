@@ -1,0 +1,65 @@
+{
+  "loading": "Loading…",
+  "round": "Round {{count}}",
+  "goal": "Goal: {{goal}}",
+  "close": "Close",
+  "cancel": "Cancel",
+  "save": "Save",
+  "newGame": "New game",
+  "menu": {
+    "scoreInput": "💯 Enter score",
+    "claims": "✋ Claims",
+    "match": "💥 Match (257)",
+    "undo": "↩ Undo",
+    "newGame": "🔄 New game",
+    "settings": "⚙️ Settings",
+    "about": "ℹ️ About"
+  },
+  "scoreInput": {
+    "title": "{{team}} – Score",
+    "confirm": "Next",
+    "opponentScore": "{{team}}: {{score}} points",
+    "maxScore": "Max. {{max}} points"
+  },
+  "claims": {
+    "title": "{{team}} – Claims"
+  },
+  "multiplier": {
+    "title": "{{team}} – Multiplier",
+    "scoreLabel": "{{mode}}: {{score}} points",
+    "mode": {
+      "WRITE": "Play",
+      "CLAIM": "Claims",
+      "MATCH": "Match"
+    }
+  },
+  "result": {
+    "title": "Game over!",
+    "won": "has won!",
+    "newGame": "New game",
+    "played": "Played:",
+    "claimed": "Claimed:"
+  },
+  "settings": {
+    "title": "Settings",
+    "goal": "Target score",
+    "team1": "Team 1",
+    "team2": "Team 2",
+    "player": "Player {{number}}",
+    "language": "Language"
+  },
+  "confirmNewGame": {
+    "title": "New game",
+    "reset": "Reset",
+    "message": "Do you really want to start a new game? All scores will be reset."
+  },
+  "about": {
+    "title": "About",
+    "subtitle": "Jass Scoreboard",
+    "developedBy": "Developed by",
+    "reportBug": "Report bug"
+  },
+  "teamPanel": {
+    "openMenu": "Open {{team}} menu"
+  }
+}

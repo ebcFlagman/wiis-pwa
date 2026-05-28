@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '@/store/gameStore';
 import { MAX_WRITE_SCORE } from '@/types';
 import { Dialog, ActionButton } from '@/components/ui/Dialog';
@@ -8,6 +9,7 @@ export function ScoreInputDialog() {
   const openMultiplier = useStore((s) => s.openMultiplier);
   const closeDialog = useStore((s) => s.closeDialog);
 
+  const { t } = useTranslation();
   const [input, setInput] = useState('');
 
   if (dialog.type !== 'scoreInput') return null;
@@ -45,12 +47,12 @@ export function ScoreInputDialog() {
 
   return (
     <Dialog
-      title={`${teamLabel} – Punkte`}
+      title={t('scoreInput.title', { team: teamLabel })}
       onClose={handleClose}
       footer={
         <>
-          <ActionButton variant="secondary" onClick={handleClose}>Abbrechen</ActionButton>
-          <ActionButton data-testid="score-confirm" onClick={handleConfirm} disabled={!valid}>Weiter</ActionButton>
+          <ActionButton variant="secondary" onClick={handleClose}>{t('cancel')}</ActionButton>
+          <ActionButton data-testid="score-confirm" onClick={handleConfirm} disabled={!valid}>{t('scoreInput.confirm')}</ActionButton>
         </>
       }
     >
@@ -61,12 +63,12 @@ export function ScoreInputDialog() {
           </div>
           {valid && opponent !== null && (
             <div className="mt-1 text-sm text-white/60">
-              {opponentLabel}: {opponent} Punkte
+              {t('scoreInput.opponentScore', { team: opponentLabel, score: opponent })}
             </div>
           )}
           {input && !valid && (
             <div className="mt-1 text-sm text-red-400">
-              Max. {MAX_WRITE_SCORE} Punkte
+              {t('scoreInput.maxScore', { max: MAX_WRITE_SCORE })}
             </div>
           )}
         </div>

@@ -1,9 +1,10 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '@/store/gameStore';
 import { Dialog, ActionButton } from '@/components/ui/Dialog';
 
-// Nur gerendert wenn dialog.type === 'settings' (conditional in GameBoard)
 export function SettingsDialog() {
+  const { t, i18n } = useTranslation();
   const [form, setForm] = useState(() => {
     const s = useStore.getState();
     return {
@@ -38,30 +39,51 @@ export function SettingsDialog() {
     useStore.getState().closeDialog();
   };
 
+  const currentLng = i18n.resolvedLanguage ?? i18n.language;
+
   return (
     <Dialog
-      title="Einstellungen"
+      title={t('settings.title')}
       onClose={() => useStore.getState().closeDialog()}
       footer={
         <>
           <ActionButton variant="secondary" onClick={() => useStore.getState().closeDialog()}>
-            Abbrechen
+            {t('cancel')}
           </ActionButton>
-          <ActionButton data-testid="settings-save" onClick={handleSave}>Speichern</ActionButton>
+          <ActionButton data-testid="settings-save" onClick={handleSave}>{t('save')}</ActionButton>
         </>
       }
     >
       <div className="flex flex-col gap-4 max-h-[60vh] overflow-y-auto pr-1">
-        {field('Zielpunkte', 'goal', 'number', 'settings-goal')}
+        {field(t('settings.goal'), 'goal', 'number', 'settings-goal')}
         <div className="border-t border-white/10 pt-3">
-          <div className="text-white/50 text-xs uppercase tracking-wider mb-2">Team 1</div>
-          {field('Spieler 1', 'player1')}
-          {field('Spieler 2', 'player2')}
+          <div className="text-white/50 text-xs uppercase tracking-wider mb-2">{t('settings.team1')}</div>
+          {field(t('settings.player', { number: 1 }), 'player1')}
+          {field(t('settings.player', { number: 2 }), 'player2')}
         </div>
         <div className="border-t border-white/10 pt-3">
-          <div className="text-white/50 text-xs uppercase tracking-wider mb-2">Team 2</div>
-          {field('Spieler 3', 'player3')}
-          {field('Spieler 4', 'player4')}
+          <div className="text-white/50 text-xs uppercase tracking-wider mb-2">{t('settings.team2')}</div>
+          {field(t('settings.player', { number: 3 }), 'player3')}
+          {field(t('settings.player', { number: 4 }), 'player4')}
+        </div>
+        <div className="border-t border-white/10 pt-3">
+          <div className="text-white/50 text-xs uppercase tracking-wider mb-2">{t('settings.language')}</div>
+          <div className="flex gap-1">
+            {(['de', 'en', 'fr'] as const).map((lng) => (
+              <button
+                key={lng}
+                type="button"
+                onClick={() => i18n.changeLanguage(lng)}
+                className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  currentLng === lng
+                    ? 'bg-red-600 text-white'
+                    : 'bg-white/10 text-white/60 hover:bg-white/20 hover:text-white'
+                }`}
+              >
+                {lng === 'de' ? 'Deutsch' : lng === 'en' ? 'English' : 'Français'}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </Dialog>

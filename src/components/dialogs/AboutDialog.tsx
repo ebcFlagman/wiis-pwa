@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {useStore} from '@/store/gameStore';
 import {Dialog} from '@/components/ui/Dialog';
 
@@ -22,19 +23,21 @@ export function AboutDialog() {
   const dialog = useStore((s) => s.dialog);
   const closeDialog = useStore((s) => s.closeDialog);
 
+  const { t } = useTranslation();
+
   if (dialog.type !== 'about') return null;
 
   return (
-    <Dialog title="Info" onClose={closeDialog}>
+    <Dialog title={t('about.title')} onClose={closeDialog}>
       <div className="flex flex-col items-center gap-3 py-2 text-center">
         <div>
           <div className="text-2xl font-bold text-white">Wiis</div>
-          <div className="text-white/50 text-sm">Jass Tafel</div>
+          <div className="text-white/50 text-sm">{t('about.subtitle')}</div>
         </div>
         <div className="text-white/40 text-sm">Version {APP_VERSION}</div>
 
         <div className="border-t border-white/10 w-full pt-3 flex flex-col gap-2">
-          <div className="text-white/60 text-sm">Entwickelt von</div>
+          <div className="text-white/60 text-sm">{t('about.developedBy')}</div>
           <div className="text-white font-medium text-sm">{AUTHOR}</div>
           <a
             href={HOMEPAGE}
@@ -48,7 +51,7 @@ export function AboutDialog() {
 
         <div className="border-t border-white/10 w-full pt-3 flex flex-col gap-2">
           <GithubLink href={GITHUB_URL} label="GitHub Repository"/>
-          <GithubLink href={GITHUB_BUGS_URL} label="Bug melden"/>
+          <GithubLink href={GITHUB_BUGS_URL} label={t('about.reportBug')}/>
           <div className="text-white/30 text-xs mt-1">MIT License</div>
         </div>
       </div>

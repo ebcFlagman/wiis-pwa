@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useStore } from '@/store/gameStore';
 import { MULTIPLIERS, MAX_WRITE_SCORE } from '@/types';
 import { Dialog } from '@/components/ui/Dialog';
@@ -7,18 +8,20 @@ export function MultiplicatorDialog() {
   const addScore = useStore((s) => s.addScore);
   const closeDialog = useStore((s) => s.closeDialog);
 
+  const { t } = useTranslation();
+
   if (dialog.type !== 'multiplier') return null;
   const { team, mode, score } = dialog;
 
   const s = useStore.getState();
   const teamLabel = team === 1 ? `${s.player1} / ${s.player2}` : `${s.player3} / ${s.player4}`;
   const oppLabel = team === 1 ? `${s.player3} / ${s.player4}` : `${s.player1} / ${s.player2}`;
-  const modeLabel = mode === 'WRITE' ? 'Spielen' : mode === 'CLAIM' ? 'Weisen' : 'Match';
+  const modeLabel = t(`multiplier.mode.${mode}`);
 
   return (
-    <Dialog title={`${teamLabel} – Multiplikator`} onClose={closeDialog}>
+    <Dialog title={t('multiplier.title', { team: teamLabel })} onClose={closeDialog}>
       <div className="mb-3 text-center text-white/60 text-sm">
-        {modeLabel}: {score} Punkte
+        {t('multiplier.scoreLabel', { mode: modeLabel, score })}
       </div>
       <div className="flex flex-col gap-2">
         {MULTIPLIERS.map((mult) => {

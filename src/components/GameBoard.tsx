@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { TeamPanel } from './TeamPanel';
 import { MainMenuDialog } from './dialogs/MainMenuDialog';
 import { ScoreInputDialog } from './dialogs/ScoreInputDialog';
@@ -10,6 +11,7 @@ import { ConfirmNewGameDialog } from './dialogs/ConfirmNewGameDialog';
 import { useStore } from '@/store/gameStore';
 
 export function GameBoard() {
+  const { t } = useTranslation();
   const currentRound = useStore((s) => s.currentRound);
   const goal = useStore((s) => s.goal);
   const team1Remaining = useStore((s) => Math.max(s.goal - s.entries.reduce((sum, e) => sum + e.team1Points, 0), 0));
@@ -29,11 +31,11 @@ export function GameBoard() {
           <div className="flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-red-500/60" />
             <span className="text-white/40 text-xs font-mono tracking-widest uppercase">
-              Runde {currentRound}
+              {t('round', { count: currentRound })}
             </span>
             <div className="w-2 h-2 rounded-full bg-red-500/60" />
           </div>
-          <span className="text-white/25 text-xs mt-1">Ziel: {goal}</span>
+          <span className="text-white/25 text-xs mt-1">{t('goal', { goal })}</span>
         </div>
 
         <span className="ml-auto text-white/35 text-xs font-mono tabular-nums">{team1Remaining}</span>

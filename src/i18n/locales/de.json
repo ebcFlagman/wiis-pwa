@@ -1,0 +1,65 @@
+{
+  "loading": "Laden…",
+  "round": "Runde {{count}}",
+  "goal": "Ziel: {{goal}}",
+  "close": "Schliessen",
+  "cancel": "Abbrechen",
+  "save": "Speichern",
+  "newGame": "Neues Spiel",
+  "menu": {
+    "scoreInput": "💯 Punkte eingeben",
+    "claims": "✋ Weisen",
+    "match": "💥 Match (257)",
+    "undo": "↩ Rückgängig",
+    "newGame": "🔄 Neues Spiel",
+    "settings": "⚙️ Einstellungen",
+    "about": "ℹ️ Info"
+  },
+  "scoreInput": {
+    "title": "{{team}} – Punkte",
+    "confirm": "Weiter",
+    "opponentScore": "{{team}}: {{score}} Punkte",
+    "maxScore": "Max. {{max}} Punkte"
+  },
+  "claims": {
+    "title": "{{team}} – Weisen"
+  },
+  "multiplier": {
+    "title": "{{team}} – Multiplikator",
+    "scoreLabel": "{{mode}}: {{score}} Punkte",
+    "mode": {
+      "WRITE": "Spielen",
+      "CLAIM": "Weisen",
+      "MATCH": "Match"
+    }
+  },
+  "result": {
+    "title": "Spiel beendet!",
+    "won": "hat gewonnen!",
+    "newGame": "Neues Spiel",
+    "played": "Gespielt:",
+    "claimed": "Gewiesen:"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "goal": "Zielpunkte",
+    "team1": "Team 1",
+    "team2": "Team 2",
+    "player": "Spieler {{number}}",
+    "language": "Sprache"
+  },
+  "confirmNewGame": {
+    "title": "Neues Spiel",
+    "reset": "Zurücksetzen",
+    "message": "Möchtest du wirklich ein neues Spiel starten? Alle Punkte werden zurückgesetzt."
+  },
+  "about": {
+    "title": "Info",
+    "subtitle": "Jass Tafel",
+    "developedBy": "Entwickelt von",
+    "reportBug": "Bug melden"
+  },
+  "teamPanel": {
+    "openMenu": "{{team}} Menü öffnen"
+  }
+}

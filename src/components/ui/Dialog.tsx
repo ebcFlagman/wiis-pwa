@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   title: string;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 export function Dialog({ title, onClose, children, footer }: Props) {
+  const { t } = useTranslation();
   return (
     <div
       className="dialog-overlay fixed inset-0 z-50 flex items-end justify-center bg-black/60 p-4 sm:items-center"
@@ -23,7 +25,7 @@ export function Dialog({ title, onClose, children, footer }: Props) {
             <button
               onClick={onClose}
               className="text-white/50 hover:text-white text-2xl leading-none w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10"
-              aria-label="Schliessen"
+              aria-label={t('close')}
             >
               ×
             </button>
