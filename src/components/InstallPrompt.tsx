@@ -2,14 +2,14 @@ import React, {useEffect, useState} from 'react';
 
 function InstallPrompt() {
   // State to store the install prompt
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   // State to decide whether to show the install button
   const [showInstall, setShowInstall] = useState(false);
 
   useEffect(() => {
     // Listen for the beforeinstallprompt event
     // This event fires when the browser determines the PWA can be installed
-    const handler = (e) => {
+    const handler = (e: any) => {
       // Prevent the browser's default install prompt
       e.preventDefault();
 
