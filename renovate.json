@@ -121,6 +121,31 @@
       "automerge": true
     },
     {
+      "description": "Group Playwright and playwright-bdd because they must stay compatible",
+      "groupName": "playwright",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "@playwright/test",
+        "playwright-bdd"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Group i18next ecosystem packages because they share peer dependencies",
+      "groupName": "i18n",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "i18next",
+        "react-i18next",
+        "i18next-browser-languagedetector"
+      ],
+      "automerge": false
+    },
+    {
       "description": "Do not automerge npm minor updates by default",
       "matchManagers": [
         "npm"
