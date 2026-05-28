@@ -15,10 +15,11 @@ export function SettingsDialog() {
     };
   });
 
-  const field = (label: string, key: keyof typeof form, type: 'text' | 'number' = 'text') => (
+  const field = (label: string, key: keyof typeof form, type: 'text' | 'number' = 'text', testId?: string) => (
     <label className="flex flex-col gap-1" key={key}>
       <span className="text-white/60 text-xs font-medium uppercase tracking-wider">{label}</span>
       <input
+        data-testid={testId}
         type={type}
         value={form[key]}
         onChange={(e) =>
@@ -46,12 +47,12 @@ export function SettingsDialog() {
           <ActionButton variant="secondary" onClick={() => useStore.getState().closeDialog()}>
             Abbrechen
           </ActionButton>
-          <ActionButton onClick={handleSave}>Speichern</ActionButton>
+          <ActionButton data-testid="settings-save" onClick={handleSave}>Speichern</ActionButton>
         </>
       }
     >
       <div className="flex flex-col gap-4 max-h-[60vh] overflow-y-auto pr-1">
-        {field('Zielpunkte', 'goal', 'number')}
+        {field('Zielpunkte', 'goal', 'number', 'settings-goal')}
         <div className="border-t border-white/10 pt-3">
           <div className="text-white/50 text-xs uppercase tracking-wider mb-2">Team 1</div>
           {field('Spieler 1', 'player1')}

@@ -50,7 +50,7 @@ export function ScoreInputDialog() {
       footer={
         <>
           <ActionButton variant="secondary" onClick={handleClose}>Abbrechen</ActionButton>
-          <ActionButton onClick={handleConfirm} disabled={!valid}>Weiter</ActionButton>
+          <ActionButton data-testid="score-confirm" onClick={handleConfirm} disabled={!valid}>Weiter</ActionButton>
         </>
       }
     >
@@ -75,6 +75,7 @@ export function ScoreInputDialog() {
           {['1','2','3','4','5','6','7','8','9','','0','⌫'].map((v, i) => (
             <button
               key={i}
+              data-testid={v ? `digit-${v === '⌫' ? 'backspace' : v}` : undefined}
               onClick={() => v && handleKey(v)}
               disabled={!v}
               className={`h-14 rounded-xl text-xl font-semibold transition-colors ${

@@ -18,6 +18,7 @@ export function TeamPanel({ team, flipped }: Props) {
 
   return (
     <button
+      data-testid={`team-panel-${team}`}
       className="team-panel flex-1 flex flex-col items-center justify-center w-full cursor-pointer relative overflow-hidden"
       style={{ transform: flipped ? 'rotate(180deg)' : undefined }}
       onClick={() => openMenu(team)}
@@ -29,7 +30,7 @@ export function TeamPanel({ team, flipped }: Props) {
       />
 
       <div className="flex flex-col items-center gap-3 px-4 select-none">
-        <div className="text-white font-bold leading-none" style={{ fontSize: 'clamp(4rem, 18vw, 7rem)' }}>
+        <div data-testid={`team-score-${team}`} className="text-white font-bold leading-none" style={{ fontSize: 'clamp(4rem, 18vw, 7rem)' }}>
           {total}
         </div>
         <div className="text-white/60 text-base font-medium tracking-widest uppercase">

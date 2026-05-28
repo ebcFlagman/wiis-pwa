@@ -15,7 +15,7 @@ export function ConfirmNewGameDialog() {
       footer={
         <>
           <ActionButton variant="secondary" onClick={closeDialog}>Abbrechen</ActionButton>
-          <ActionButton variant="danger" onClick={newGame}>Zurücksetzen</ActionButton>
+          <ActionButton data-testid="confirm-reset" variant="danger" onClick={newGame}>Zurücksetzen</ActionButton>
         </>
       }
     >

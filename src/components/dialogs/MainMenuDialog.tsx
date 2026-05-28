@@ -26,27 +26,27 @@ export function MainMenuDialog() {
   return (
     <Dialog title={label} onClose={closeDialog}>
       <div className="flex flex-col gap-1">
-        <MenuButton onClick={() => openScoreInput(team)}>
+        <MenuButton data-testid="menu-score-input" onClick={() => openScoreInput(team)}>
           💯 Punkte eingeben
         </MenuButton>
-        <MenuButton onClick={() => openClaims(team)}>
+        <MenuButton data-testid="menu-claims" onClick={() => openClaims(team)}>
           ✋ Weisen
         </MenuButton>
-        <MenuButton onClick={() => openMultiplier(team, 'MATCH', 257)}>
+        <MenuButton data-testid="menu-match" onClick={() => openMultiplier(team, 'MATCH', 257)}>
           💥 Match (257)
         </MenuButton>
         <div className="my-1 border-t border-white/10" />
-        <MenuButton onClick={undo} variant={hasAnything ? 'default' : 'danger'}>
+        <MenuButton data-testid="menu-undo" onClick={undo} variant={hasAnything ? 'default' : 'danger'}>
           ↩ Rückgängig
         </MenuButton>
-        <MenuButton onClick={confirmNewGame} variant="danger">
+        <MenuButton data-testid="menu-new-game" onClick={confirmNewGame} variant="danger">
           🔄 Neues Spiel
         </MenuButton>
         <div className="my-1 border-t border-white/10" />
-        <MenuButton onClick={openSettings}>
+        <MenuButton data-testid="menu-settings" onClick={openSettings}>
           ⚙️ Einstellungen
         </MenuButton>
-        <MenuButton onClick={openAbout}>
+        <MenuButton data-testid="menu-about" onClick={openAbout}>
           ℹ️ Info
         </MenuButton>
       </div>

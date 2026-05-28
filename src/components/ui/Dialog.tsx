@@ -44,9 +44,10 @@ interface MenuButtonProps {
   onClick: () => void;
   children: ReactNode;
   variant?: 'default' | 'danger' | 'primary';
+  'data-testid'?: string;
 }
 
-export function MenuButton({ onClick, children, variant = 'default' }: MenuButtonProps) {
+export function MenuButton({ onClick, children, variant = 'default', 'data-testid': testId }: MenuButtonProps) {
   const base = 'w-full text-left px-4 py-3.5 rounded-xl font-medium text-base transition-colors';
   const variants = {
     default: 'text-white hover:bg-white/10 active:bg-white/15',
@@ -54,7 +55,7 @@ export function MenuButton({ onClick, children, variant = 'default' }: MenuButto
     primary: 'text-red-400 hover:bg-red-500/10 active:bg-red-500/15',
   };
   return (
-    <button className={`${base} ${variants[variant]}`} onClick={onClick}>
+    <button data-testid={testId} className={`${base} ${variants[variant]}`} onClick={onClick}>
       {children}
     </button>
   );
@@ -65,9 +66,10 @@ interface ActionButtonProps {
   children: ReactNode;
   variant?: 'primary' | 'secondary' | 'danger';
   disabled?: boolean;
+  'data-testid'?: string;
 }
 
-export function ActionButton({ onClick, children, variant = 'primary', disabled }: ActionButtonProps) {
+export function ActionButton({ onClick, children, variant = 'primary', disabled, 'data-testid': testId }: ActionButtonProps) {
   const base = 'px-5 py-2.5 rounded-xl font-semibold text-sm transition-colors disabled:opacity-40';
   const variants = {
     primary: 'bg-red-600 text-white hover:bg-red-500 active:bg-red-700',
@@ -75,7 +77,7 @@ export function ActionButton({ onClick, children, variant = 'primary', disabled 
     danger: 'bg-red-700 text-white hover:bg-red-600 active:bg-red-800',
   };
   return (
-    <button className={`${base} ${variants[variant]}`} onClick={onClick} disabled={disabled}>
+    <button data-testid={testId} className={`${base} ${variants[variant]}`} onClick={onClick} disabled={disabled}>
       {children}
     </button>
   );

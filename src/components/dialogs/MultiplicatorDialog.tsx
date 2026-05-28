@@ -27,6 +27,7 @@ export function MultiplicatorDialog() {
           return (
             <button
               key={mult}
+              data-testid={`multiplier-${mult}`}
               onClick={() => addScore(team, mode, score, mult)}
               className="flex items-center justify-between px-4 py-3 rounded-xl bg-white/10 hover:bg-red-600/30 active:bg-red-600/50 transition-colors"
             >

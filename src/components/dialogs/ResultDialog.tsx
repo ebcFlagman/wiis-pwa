@@ -32,7 +32,7 @@ export function ResultDialog() {
       <div className="flex flex-col items-center gap-4 py-2">
         <div className="text-center">
           <div className="text-4xl mb-1">🏆</div>
-          <div className="text-2xl font-bold text-red-400">{winnerLabel}</div>
+          <div data-testid="result-winner" className="text-2xl font-bold text-red-400">{winnerLabel}</div>
           <div className="text-white/60 text-sm mt-1">hat gewonnen!</div>
         </div>
 

@@ -19,6 +19,7 @@ export function ClaimsDialog() {
         {CLAIM_PRESETS.map((pts) => (
           <button
             key={pts}
+            data-testid={`claim-${pts}`}
             onClick={() => openMultiplier(team, 'CLAIM', pts)}
             className="h-14 rounded-xl bg-white/10 text-white text-lg font-semibold hover:bg-red-600/30 active:bg-red-600/50 transition-colors"
           >

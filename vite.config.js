@@ -3,9 +3,15 @@ import react from '@vitejs/plugin-react'
 import {VitePWA} from 'vite-plugin-pwa'
 import tailwindcss from "@tailwindcss/vite";
 import pkg from './package.json' with { type: 'json' };
+import { fileURLToPath, URL } from 'node:url';
 
 // https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
   define: {
     APP_VERSION: JSON.stringify(pkg.version),
     AUTHOR: JSON.stringify(pkg.author),
