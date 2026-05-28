@@ -3,6 +3,8 @@
 > Deine digitale Jass-Tafel. Punkte zählen, Runden verfolgen, Gewinner küren – ganz ohne Papier und Bleistift.
 
 [![Build](https://github.com/ebcFlagman/wiis-pwa/actions/workflows/build.yml/badge.svg)](https://github.com/ebcFlagman/wiis-pwa/actions/workflows/build.yml)
+[![Latest Release](https://img.shields.io/github/v/release/ebcFlagman/wiis-pwa)](https://github.com/ebcFlagman/wiis-pwa/releases/latest)
+[![Docker](https://img.shields.io/badge/docker-ghcr.io-blue?logo=docker)](https://github.com/ebcFlagman/wiis-pwa/pkgs/container/wiis-pwa)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ---
