@@ -1,4 +1,4 @@
-import {defineConfig} from 'vite'
+import {defineConfig} from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import {VitePWA} from 'vite-plugin-pwa'
 import tailwindcss from "@tailwindcss/vite";
@@ -18,6 +18,12 @@ export default defineConfig({
     HOMEPAGE: JSON.stringify(pkg.homepage),
     GITHUB_URL: JSON.stringify(pkg.repository.url.replace('git+', '').replace('.git', '')),
     GITHUB_BUGS_URL: JSON.stringify(pkg.bugs.url),
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['fake-indexeddb/auto'],
+    include: ['src/**/*.test.ts'],
   },
   plugins: [
     react(),

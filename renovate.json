@@ -46,7 +46,8 @@
       "matchPackageNames": [
         "vite",
         "@vitejs/plugin-react",
-        "vite-plugin-pwa"
+        "vite-plugin-pwa",
+        "vitest"
       ],
       "automerge": false
     },
@@ -108,6 +109,7 @@
         "vite",
         "@vitejs/plugin-react",
         "vite-plugin-pwa",
+        "vitest",
         "tailwindcss",
         "@tailwindcss/vite",
         "@tailwindcss/postcss",

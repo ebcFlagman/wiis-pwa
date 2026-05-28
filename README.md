@@ -32,7 +32,7 @@
 | Persistenz | Dexie (IndexedDB) |
 | i18n | i18next + react-i18next |
 | Build | Vite 8 + vite-plugin-pwa |
-| Tests | Playwright + playwright-bdd |
+| Tests | Vitest (unit) + Playwright + playwright-bdd (E2E) |
 | CI | GitHub Actions |
 | Deployment | Docker + nginx |
 
@@ -69,6 +69,8 @@ npm run dev
 | `npm run build` | Produktions-Build erstellen (`dist/`) |
 | `npm run preview` | Produktions-Build lokal vorschauen |
 | `npm run lint` | ESLint auf `src/` ausführen |
+| `npm test` | Unit-Tests (Vitest) einmalig ausführen |
+| `npm run test:watch` | Unit-Tests im Watch-Modus |
 | `npm run test:e2e` | E2E-Tests (Playwright) im Headless-Modus |
 | `npm run test:e2e:ui` | E2E-Tests im interaktiven UI-Modus |
 | `npm run test:e2e:report` | Playwright HTML-Report öffnen |
