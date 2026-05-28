@@ -2,9 +2,17 @@ import {defineConfig} from 'vite'
 import react from '@vitejs/plugin-react'
 import {VitePWA} from 'vite-plugin-pwa'
 import tailwindcss from "@tailwindcss/vite";
+import pkg from './package.json' with { type: 'json' };
 
 // https://vite.dev/config/
 export default defineConfig({
+  define: {
+    APP_VERSION: JSON.stringify(pkg.version),
+    AUTHOR: JSON.stringify(pkg.author),
+    HOMEPAGE: JSON.stringify(pkg.homepage),
+    GITHUB_URL: JSON.stringify(pkg.repository.url.replace('git+', '').replace('.git', '')),
+    GITHUB_BUGS_URL: JSON.stringify(pkg.bugs.url),
+  },
   plugins: [
     react(),
     tailwindcss(),
