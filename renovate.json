@@ -1,0 +1,166 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":dependencyDashboard",
+    ":semanticCommits",
+    ":semanticCommitTypeAll(chore)",
+    ":automergeDigest",
+    ":automergePatch"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "rangeStrategy": "pin",
+  "minimumReleaseAge": "3 days",
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": [
+      "before 5am on monday"
+    ],
+    "automerge": false
+  },
+  "packageRules": [
+    {
+      "description": "Group React packages and type definitions because they must stay in sync",
+      "groupName": "react",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Group Vite ecosystem packages because they must stay compatible",
+      "groupName": "vite",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "vite",
+        "@vitejs/plugin-react",
+        "vite-plugin-pwa"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Group Tailwind CSS ecosystem packages because they must stay compatible",
+      "groupName": "tailwindcss",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "tailwindcss",
+        "@tailwindcss/vite",
+        "@tailwindcss/postcss",
+        "autoprefixer",
+        "postcss"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Group ESLint and related plugins",
+      "groupName": "eslint",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "eslint",
+        "@eslint/js",
+        "globals",
+        "typescript-eslint",
+        "eslint-plugin-react-hooks",
+        "eslint-plugin-react-refresh"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Handle TypeScript separately due to tooling compatibility constraints",
+      "groupName": "typescript",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchPackageNames": [
+        "typescript"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Automerge safe npm patch updates except critical framework and tooling groups",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "excludePackageNames": [
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom",
+        "vite",
+        "@vitejs/plugin-react",
+        "vite-plugin-pwa",
+        "tailwindcss",
+        "@tailwindcss/vite",
+        "@tailwindcss/postcss",
+        "eslint",
+        "@eslint/js",
+        "typescript-eslint",
+        "eslint-plugin-react-hooks",
+        "eslint-plugin-react-refresh",
+        "typescript"
+      ],
+      "automerge": true
+    },
+    {
+      "description": "Do not automerge npm minor updates by default",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Never automerge npm major updates",
+      "matchManagers": [
+        "npm"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false
+    },
+    {
+      "description": "Automerge safe Docker image patch, minor and digest updates",
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest"
+      ],
+      "automerge": true
+    },
+    {
+      "description": "Never automerge Docker image major updates",
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false
+    }
+  ]
+}
