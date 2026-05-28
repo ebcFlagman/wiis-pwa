@@ -1,5 +1,4 @@
 export interface Settings {
-  id?: number;
   goal: number;
   player1: string;
   player2: string;
