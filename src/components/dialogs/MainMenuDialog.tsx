@@ -27,7 +27,7 @@ export function MainMenuDialog() {
     <Dialog title={label} onClose={closeDialog}>
       <div className="flex flex-col gap-1">
         <MenuButton onClick={() => openScoreInput(team)}>
-          🃏 Punkte eingeben
+          💯 Punkte eingeben
         </MenuButton>
         <MenuButton onClick={() => openClaims(team)}>
           ✋ Weisen
