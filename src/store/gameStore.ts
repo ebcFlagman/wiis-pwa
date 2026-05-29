@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import {db} from '@/db/db';
-import {DEFAULT_GOAL, MATCH_SCORE, MAX_WRITE_SCORE, type ScoreEntry, type Settings,} from '@/types';
+import {DEFAULT_GOAL, MATCH_SCORE, MAX_WRITE_SCORE, STOCK_SCORE, type ScoreEntry, type Settings,} from '@/types';
 import type {StoreState} from './types';
 
 // Guard against double-init from React StrictMode's double-invoke of effects
@@ -112,7 +112,7 @@ export const useStore = create<StoreState>()((set, get) => ({
         team1Points = (MAX_WRITE_SCORE - score) * multiplier;
       }
     } else {
-      const pts = (mode === 'MATCH' ? MATCH_SCORE : score) * multiplier;
+      const pts = (mode === 'MATCH' ? MATCH_SCORE : mode === 'STOCK' ? STOCK_SCORE : score) * multiplier;
       if (team === 1) team1Points = pts;
       else team2Points = pts;
     }

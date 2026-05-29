@@ -1,1 +1,1 @@
-export type Mode = 'WRITE' | 'CLAIM' | 'MATCH';
+export type Mode = 'WRITE' | 'CLAIM' | 'MATCH' | 'STOCK';

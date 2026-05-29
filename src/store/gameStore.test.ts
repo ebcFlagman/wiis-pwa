@@ -1,6 +1,6 @@
 import {beforeEach, describe, expect, it} from 'vitest';
 import {db} from '@/db/db';
-import {DEFAULT_GOAL, MATCH_SCORE, MAX_WRITE_SCORE} from '@/types';
+import {DEFAULT_GOAL, MATCH_SCORE, MAX_WRITE_SCORE, STOCK_SCORE} from '@/types';
 import {useStore} from './gameStore';
 
 const resetState = () =>
@@ -127,6 +127,29 @@ describe('addScore', () => {
     const {entries} = useStore.getState();
     expect(entries[0].team1Points).toBe(0);
     expect(entries[0].team2Points).toBe(50);
+    expect(useStore.getState().currentRound).toBe(1);
+  });
+
+  it('STOCK mode assigns STOCK_SCORE only to the playing team', async () => {
+    await withGame();
+    await useStore.getState().addScore(1, 'STOCK', 0, 1);
+    const {entries} = useStore.getState();
+    expect(entries[0].team1Points).toBe(STOCK_SCORE);
+    expect(entries[0].team2Points).toBe(0);
+    expect(useStore.getState().currentRound).toBe(1);
+  });
+
+  it('STOCK mode applies multiplier', async () => {
+    await withGame();
+    await useStore.getState().addScore(2, 'STOCK', 0, 3);
+    const {entries} = useStore.getState();
+    expect(entries[0].team2Points).toBe(STOCK_SCORE * 3);
+    expect(entries[0].team1Points).toBe(0);
+  });
+
+  it('STOCK mode does not advance currentRound', async () => {
+    await withGame();
+    await useStore.getState().addScore(1, 'STOCK', 0, 1);
     expect(useStore.getState().currentRound).toBe(1);
   });
 
