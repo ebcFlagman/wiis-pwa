@@ -60,6 +60,10 @@ When('ich {string} Punkte wähle', async ({ page }, pts: string) => {
   await page.getByTestId(`claim-${pts}`).click();
 });
 
+When('ich wähle Stöck', async ({ page }) => {
+  await page.getByTestId('claim-stock').click();
+});
+
 When('ich Multiplikator {string} wähle', async ({ page }, mult: string) => {
   const num = mult.replace('×', '');
   await page.getByTestId(`multiplier-${num}`).click();

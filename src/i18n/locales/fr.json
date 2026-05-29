@@ -22,7 +22,8 @@
     "maxScore": "Max. {{max}} points"
   },
   "claims": {
-    "title": "{{team}} – Annonces"
+    "title": "{{team}} – Annonces",
+    "stock": "Stöck (Roi+Dame Atout)"
   },
   "multiplier": {
     "title": "{{team}} – Multiplicateur",
@@ -30,7 +31,8 @@
     "mode": {
       "WRITE": "Jouer",
       "CLAIM": "Annonces",
-      "MATCH": "Match"
+      "MATCH": "Match",
+      "STOCK": "Stöck"
     }
   },
   "result": {

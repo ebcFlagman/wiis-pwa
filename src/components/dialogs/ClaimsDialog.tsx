@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useStore } from '@/store/gameStore';
-import { CLAIM_PRESETS } from '@/types';
+import { CLAIM_PRESETS, STOCK_SCORE } from '@/types';
 import { Dialog } from '@/components/ui/Dialog';
 
 export function ClaimsDialog() {
@@ -19,6 +19,13 @@ export function ClaimsDialog() {
   return (
     <Dialog title={t('claims.title', { team: label })} onClose={closeDialog}>
       <div className="grid grid-cols-3 gap-2">
+        <button
+          data-testid="claim-stock"
+          onClick={() => openMultiplier(team, 'STOCK', STOCK_SCORE)}
+          className="col-span-3 h-14 rounded-xl bg-amber-600/30 text-amber-300 text-lg font-semibold hover:bg-amber-600/50 active:bg-amber-600/70 transition-colors"
+        >
+          {t('claims.stock')}
+        </button>
         {CLAIM_PRESETS.map((pts) => (
           <button
             key={pts}

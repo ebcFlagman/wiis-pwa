@@ -23,8 +23,8 @@ export function ResultDialog() {
 
   const t1Played = entries.filter((e) => e.mode === 'WRITE' || e.mode === 'MATCH').reduce((sum, e) => sum + e.team1Points, 0);
   const t2Played = entries.filter((e) => e.mode === 'WRITE' || e.mode === 'MATCH').reduce((sum, e) => sum + e.team2Points, 0);
-  const t1Claimed = entries.filter((e) => e.mode === 'CLAIM').reduce((sum, e) => sum + e.team1Points, 0);
-  const t2Claimed = entries.filter((e) => e.mode === 'CLAIM').reduce((sum, e) => sum + e.team2Points, 0);
+  const t1Claimed = entries.filter((e) => e.mode === 'CLAIM' || e.mode === 'STOCK').reduce((sum, e) => sum + e.team1Points, 0);
+  const t2Claimed = entries.filter((e) => e.mode === 'CLAIM' || e.mode === 'STOCK').reduce((sum, e) => sum + e.team2Points, 0);
 
   return (
     <Dialog

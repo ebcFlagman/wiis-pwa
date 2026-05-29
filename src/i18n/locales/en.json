@@ -22,7 +22,8 @@
     "maxScore": "Max. {{max}} points"
   },
   "claims": {
-    "title": "{{team}} – Claims"
+    "title": "{{team}} – Claims",
+    "stock": "Stöck (King+Queen Trump)"
   },
   "multiplier": {
     "title": "{{team}} – Multiplier",
@@ -30,7 +31,8 @@
     "mode": {
       "WRITE": "Play",
       "CLAIM": "Claims",
-      "MATCH": "Match"
+      "MATCH": "Match",
+      "STOCK": "Stöck"
     }
   },
   "result": {

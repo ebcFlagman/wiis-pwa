@@ -22,7 +22,8 @@
     "maxScore": "Max. {{max}} Punkte"
   },
   "claims": {
-    "title": "{{team}} – Weisen"
+    "title": "{{team}} – Weisen",
+    "stock": "Stöck (König+Dame Trumpf)"
   },
   "multiplier": {
     "title": "{{team}} – Multiplikator",
@@ -30,7 +31,8 @@
     "mode": {
       "WRITE": "Spielen",
       "CLAIM": "Weisen",
-      "MATCH": "Match"
+      "MATCH": "Match",
+      "STOCK": "Stöck"
     }
   },
   "result": {
