@@ -25,14 +25,22 @@
     "title": "{{team}} – Claims",
     "stock": "Stöck (King+Queen Trump)"
   },
-  "multiplier": {
-    "title": "{{team}} – Multiplier",
-    "scoreLabel": "{{mode}}: {{score}} points",
-    "mode": {
-      "WRITE": "Play",
-      "CLAIM": "Claims",
-      "MATCH": "Match",
-      "STOCK": "Stöck"
+  "trump": {
+    "title": "{{team}} – Choose Trump",
+    "choose": "Choose Trump",
+    "group": {
+      "einfach": "Single (×{{mult}})",
+      "doppelt": "Double (×{{mult}})",
+      "dreifach": "Triple (×{{mult}})"
+    },
+    "name": {
+      "Bells": "Diamonds / Bells",
+      "Roses": "Hearts / Roses",
+      "Shields": "Spades / Shields",
+      "Acorns": "Clubs / Acorns",
+      "TopDown": "Obenabe",
+      "BottomUp": "Undenufe",
+      "Slalom": "Slalom"
     }
   },
   "result": {
@@ -48,7 +56,8 @@
     "team1": "Team 1",
     "team2": "Team 2",
     "player": "Player {{number}}",
-    "language": "Language"
+    "language": "Language",
+    "trumpMultipliers": "Trump → Multiplier"
   },
   "confirmNewGame": {
     "title": "New game",

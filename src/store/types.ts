@@ -1,24 +1,26 @@
-import type { DialogState, Mode, ScoreEntry, Settings } from '@/types';
+import type {DialogState, Mode, ScoreEntry, Settings, Trump, TrumpNext} from '@/types';
 
 export interface StoreState extends Settings {
   initialized: boolean;
   currentGameId: number | null;
   entries: ScoreEntry[];
   currentRound: number;
+  currentTrump: Trump | null;
   dialog: DialogState;
 
   getTotal: (team: 1 | 2) => number;
   getLastRoundTotal: (team: 1 | 2) => number;
 
   initialize: () => Promise<void>;
-  addScore: (team: 1 | 2, mode: Mode, score: number, multiplier: number) => Promise<void>;
+  addScore: (team: 1 | 2, mode: Mode, score: number) => Promise<void>;
   undo: () => Promise<void>;
   newGame: () => Promise<void>;
 
   openMenu: (team: 1 | 2) => void;
   openScoreInput: (team: 1 | 2) => void;
   openClaims: (team: 1 | 2) => void;
-  openMultiplier: (team: 1 | 2, mode: Mode, score: number) => void;
+  openTrump: (team: 1 | 2, next: TrumpNext) => void;
+  selectTrump: (trump: Trump, team: 1 | 2, next: TrumpNext) => Promise<void>;
   openSettings: () => void;
   openAbout: () => void;
   confirmNewGame: () => void;

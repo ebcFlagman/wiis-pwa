@@ -25,14 +25,22 @@
     "title": "{{team}} – Weisen",
     "stock": "Stöck (König+Dame Trumpf)"
   },
-  "multiplier": {
-    "title": "{{team}} – Multiplikator",
-    "scoreLabel": "{{mode}}: {{score}} Punkte",
-    "mode": {
-      "WRITE": "Spielen",
-      "CLAIM": "Weisen",
-      "MATCH": "Match",
-      "STOCK": "Stöck"
+  "trump": {
+    "title": "{{team}} – Trumpf wählen",
+    "choose": "Trumpf wählen",
+    "group": {
+      "einfach": "Einfach (×{{mult}})",
+      "doppelt": "Doppelt (×{{mult}})",
+      "dreifach": "Dreifach (×{{mult}})"
+    },
+    "name": {
+      "Bells": "Eggen / Schälle",
+      "Roses": "Herz / Rosen",
+      "Shields": "Schaufel / Schilten",
+      "Acorns": "Kreuz / Eicheln",
+      "TopDown": "Obenabe",
+      "BottomUp": "Undenufe",
+      "Slalom": "Slalom"
     }
   },
   "result": {
@@ -48,7 +56,8 @@
     "team1": "Team 1",
     "team2": "Team 2",
     "player": "Spieler {{number}}",
-    "language": "Sprache"
+    "language": "Sprache",
+    "trumpMultipliers": "Trumpf → Multiplikator"
   },
   "confirmNewGame": {
     "title": "Neues Spiel",

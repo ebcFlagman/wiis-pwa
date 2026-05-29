@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useStore } from '@/store/gameStore';
-import { MAX_WRITE_SCORE } from '@/types';
-import { Dialog, ActionButton } from '@/components/ui/Dialog';
+import {useState} from 'react';
+import {useTranslation} from 'react-i18next';
+import {useStore} from '@/store/gameStore';
+import {MAX_WRITE_SCORE} from '@/types';
+import {ActionButton, Dialog} from '@/components/ui/Dialog';
 
 export function ScoreInputDialog() {
   const dialog = useStore((s) => s.dialog);
-  const openMultiplier = useStore((s) => s.openMultiplier);
+  const addScore = useStore((s) => s.addScore);
   const closeDialog = useStore((s) => s.closeDialog);
 
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const [input, setInput] = useState('');
 
   if (dialog.type !== 'scoreInput') return null;
-  const { team } = dialog;
+  const {team} = dialog;
 
   const s = useStore.getState();
   const teamLabel = team === 1 ? `${s.player1} / ${s.player2}` : `${s.player3} / ${s.player4}`;
@@ -25,7 +25,7 @@ export function ScoreInputDialog() {
 
   const handleConfirm = () => {
     if (valid) {
-      openMultiplier(team, 'WRITE', score);
+      addScore(team, 'WRITE', score);
       setInput('');
     }
   };
@@ -47,12 +47,13 @@ export function ScoreInputDialog() {
 
   return (
     <Dialog
-      title={t('scoreInput.title', { team: teamLabel })}
+      title={t('scoreInput.title', {team: teamLabel})}
       onClose={handleClose}
       footer={
         <>
           <ActionButton variant="secondary" onClick={handleClose}>{t('cancel')}</ActionButton>
-          <ActionButton data-testid="score-confirm" onClick={handleConfirm} disabled={!valid}>{t('scoreInput.confirm')}</ActionButton>
+          <ActionButton data-testid="score-confirm" onClick={handleConfirm}
+                        disabled={!valid}>{t('scoreInput.confirm')}</ActionButton>
         </>
       }
     >
@@ -63,18 +64,18 @@ export function ScoreInputDialog() {
           </div>
           {valid && opponent !== null && (
             <div className="mt-1 text-sm text-white/60">
-              {t('scoreInput.opponentScore', { team: opponentLabel, score: opponent })}
+              {t('scoreInput.opponentScore', {team: opponentLabel, score: opponent})}
             </div>
           )}
           {input && !valid && (
             <div className="mt-1 text-sm text-red-400">
-              {t('scoreInput.maxScore', { max: MAX_WRITE_SCORE })}
+              {t('scoreInput.maxScore', {max: MAX_WRITE_SCORE})}
             </div>
           )}
         </div>
 
         <div className="grid grid-cols-3 gap-2">
-          {['1','2','3','4','5','6','7','8','9','','0','⌫'].map((v, i) => (
+          {['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'].map((v, i) => (
             <button
               key={i}
               data-testid={v ? `digit-${v === '⌫' ? 'backspace' : v}` : undefined}
@@ -84,8 +85,8 @@ export function ScoreInputDialog() {
                 v === '⌫'
                   ? 'bg-white/10 text-white hover:bg-white/20'
                   : v
-                  ? 'bg-white/10 text-white hover:bg-white/20 active:bg-white/30'
-                  : 'invisible'
+                    ? 'bg-white/10 text-white hover:bg-white/20 active:bg-white/30'
+                    : 'invisible'
               }`}
             >
               {v}

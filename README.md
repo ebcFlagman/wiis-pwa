@@ -88,7 +88,7 @@ Vordefinierten Weis-Wert wählen (20, 40, 50 … 200). Der Betrag wird dem ausge
 ### Match (MATCH)
 Fixe 257 Punkte multipliziert mit dem gewählten Multiplikator für das aktive Team.
 
-Die Standard-Zielpunktzahl ist **2500** und kann in den Einstellungen angepasst werden.
+Die Standard-Zielpunktzahl ist **1000** und kann in den Einstellungen angepasst werden.
 
 ---
 
@@ -135,12 +135,13 @@ Nach dem Öffnen im Browser erscheint ein Installations-Banner (je nach Browser 
 
 Die E2E-Tests sind als BDD-Feature-Files in Deutsch geschrieben und decken die vier Kernszenarien ab:
 
-| Feature | Beschreibung |
-|---|---|
+| Feature           | Beschreibung                        |
+|-------------------|-------------------------------------|
 | `scoring.feature` | Punkteverteilung im Schreiben-Modus |
-| `claims.feature` | Weisen mit Multiplikatoren |
-| `match.feature` | Match-Modus (257 Punkte fix) |
-| `undo.feature` | Rückgängig-Funktion und Rundenreset |
+| `claims.feature`  | Weisen mit Multiplikatoren          |
+| `stock.feature`   | Stock Weis mit Multiplikatoren      |
+| `match.feature`   | Match-Modus (257 Punkte fix)        |
+| `undo.feature`    | Rückgängig-Funktion und Rundenreset |
 
 ```bash
 # Tests ausführen (startet automatisch den Dev-Server)

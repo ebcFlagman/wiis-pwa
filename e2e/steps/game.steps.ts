@@ -64,9 +64,18 @@ When('ich wähle Stöck', async ({ page }) => {
   await page.getByTestId('claim-stock').click();
 });
 
-When('ich Multiplikator {string} wähle', async ({ page }, mult: string) => {
-  const num = mult.replace('×', '');
-  await page.getByTestId(`multiplier-${num}`).click();
+const trumpNameMap: Record<string, string> = {
+  Schellen: 'Bells',
+  Rosen:    'Roses',
+  Schilten: 'Shields',
+  Eicheln:  'Acorns',
+  Obenabe:  'TopDown',
+  Undenufe: 'BottomUp',
+};
+
+When('ich Trumpf {string} wähle', async ({ page }, trump: string) => {
+  const mapped = trumpNameMap[trump] ?? trump;
+  await page.getByTestId(`trump-${mapped}`).click();
 });
 
 Then('zeigt Team {int} {string} Punkte', async ({ page }, team: number, expected: string) => {

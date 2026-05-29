@@ -25,14 +25,22 @@
     "title": "{{team}} – Annonces",
     "stock": "Stöck (Roi+Dame Atout)"
   },
-  "multiplier": {
-    "title": "{{team}} – Multiplicateur",
-    "scoreLabel": "{{mode}} : {{score}} points",
-    "mode": {
-      "WRITE": "Jouer",
-      "CLAIM": "Annonces",
-      "MATCH": "Match",
-      "STOCK": "Stöck"
+  "farbe": {
+    "title": "{{team}} – Choisir l'atout",
+    "choose": "Choisir l'atout'",
+    "group": {
+      "einfach": "Simple (×{{mult}})",
+      "doppelt": "Double (×{{mult}})",
+      "dreifach": "Triple (×{{mult}})"
+    },
+    "name": {
+      "Bells": "Carreau / Grelots",
+      "Roses": "Cœur / Roses",
+      "Shields": "Pique / Écus",
+      "Acorns": "Trèfle / Glands",
+      "TopDown": "Obenabe",
+      "BottomUp": "Undenufe",
+      "Slalom": "Slalom"
     }
   },
   "result": {
@@ -48,7 +56,8 @@
     "team1": "Équipe 1",
     "team2": "Équipe 2",
     "player": "Joueur {{number}}",
-    "language": "Langue"
+    "language": "Langue",
+    "farbeMultipliers": "Couleur → Multiplicateur"
   },
   "confirmNewGame": {
     "title": "Nouvelle partie",
