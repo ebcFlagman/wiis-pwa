@@ -8,4 +8,5 @@ export interface DBScoreEntry {
   mode: Mode;
   playingTeam: 1 | 2;
   roundNumber: number;
+  trump?: string;
 }

@@ -1,9 +1,18 @@
 import {create} from 'zustand';
 import {db} from '@/db/db';
-import {DEFAULT_GOAL, MATCH_SCORE, MAX_WRITE_SCORE, STOCK_SCORE, type ScoreEntry, type Settings,} from '@/types';
+import {
+  DEFAULT_GOAL,
+  DEFAULT_TRUMP_MULTIPLIERS,
+  MATCH_SCORE,
+  MAX_WRITE_SCORE,
+  type ScoreEntry,
+  type Settings,
+  STOCK_SCORE,
+  TRUMP,
+  type Trump,
+} from '@/types';
 import type {StoreState} from './types';
 
-// Guard against double-init from React StrictMode's double-invoke of effects
 let initStarted = false;
 
 const defaultSettings: Settings = {
@@ -12,6 +21,7 @@ const defaultSettings: Settings = {
   player2: 'Spieler 2',
   player3: 'Spieler 3',
   player4: 'Spieler 4',
+  trumpMultipliers: {...DEFAULT_TRUMP_MULTIPLIERS},
 };
 
 const gamesInHistory: number = 10;
@@ -23,12 +33,22 @@ function calcCurrentRound(entries: ScoreEntry[]): number {
   return writeInMax ? maxRound + 1 : maxRound;
 }
 
+function normaliseTrumpMultipliers(stored: Record<string, number> | undefined): Record<Trump, number> {
+  const base = {...DEFAULT_TRUMP_MULTIPLIERS};
+  if (!stored) return base;
+  for (const trump of TRUMP) {
+    if (typeof stored[trump] === 'number') base[trump] = stored[trump];
+  }
+  return base;
+}
+
 export const useStore = create<StoreState>()((set, get) => ({
   ...defaultSettings,
   initialized: false,
   currentGameId: null,
   entries: [],
   currentRound: 1,
+  currentTrump: null,
   dialog: {type: 'none'},
 
   getTotal: (team) => {
@@ -59,6 +79,8 @@ export const useStore = create<StoreState>()((set, get) => ({
       .filter((g) => g.finishedAt === undefined)
       .last();
 
+    const trumpMultipliers = normaliseTrumpMultipliers(storedSettings?.trumpMultipliers as Record<string, number> | undefined);
+
     const settings: Settings = storedSettings
       ? {
         goal: storedSettings.goal,
@@ -66,6 +88,7 @@ export const useStore = create<StoreState>()((set, get) => ({
         player2: storedSettings.player2,
         player3: storedSettings.player3,
         player4: storedSettings.player4,
+        trumpMultipliers: trumpMultipliers,
       }
       : defaultSettings;
 
@@ -82,23 +105,31 @@ export const useStore = create<StoreState>()((set, get) => ({
       : [];
 
     const entries: ScoreEntry[] = dbEntries.map(
-      ({id, team1Points, team2Points, mode, playingTeam, roundNumber}) => ({
+      ({id, team1Points, team2Points, mode, playingTeam, roundNumber, trump}) => ({
         id, team1Points, team2Points, mode, playingTeam, roundNumber,
+        trump: trump as Trump | undefined,
       })
     );
+
+    const currentRound = calcCurrentRound(entries);
+    const roundEntries = entries.filter((e) => e.roundNumber === currentRound);
+    const currentTrump = (roundEntries[roundEntries.length - 1]?.trump) ?? null;
 
     set({
       ...settings,
       currentGameId: game?.id ?? null,
       entries,
-      currentRound: calcCurrentRound(entries),
+      currentRound,
+      currentTrump: currentTrump,
       initialized: true,
     });
   },
 
-  addScore: async (team, mode, score, multiplier) => {
-    const {entries, currentRound, goal, currentGameId} = get();
+  addScore: async (team, mode, score) => {
+    const {entries, currentRound, goal, currentGameId, currentTrump, trumpMultipliers} = get();
     if (currentGameId === null) return;
+
+    const multiplier = currentTrump ? trumpMultipliers[currentTrump] : 1;
 
     let team1Points = 0;
     let team2Points = 0;
@@ -124,6 +155,7 @@ export const useStore = create<StoreState>()((set, get) => ({
       mode,
       playingTeam: team,
       roundNumber: currentRound,
+      trump: currentTrump ?? undefined,
     } as Parameters<typeof db.entries.add>[0]);
 
     const newEntry: ScoreEntry = {
@@ -133,10 +165,12 @@ export const useStore = create<StoreState>()((set, get) => ({
       mode,
       playingTeam: team,
       roundNumber: currentRound,
+      trump: currentTrump ?? undefined,
     };
 
     const newEntries = [...entries, newEntry];
     const nextRound = mode === 'WRITE' ? currentRound + 1 : currentRound;
+    const nextTrump = mode === 'WRITE' ? null : currentTrump;
 
     const t1Total = newEntries.reduce((s, e) => s + e.team1Points, 0);
     const t2Total = newEntries.reduce((s, e) => s + e.team2Points, 0);
@@ -149,6 +183,7 @@ export const useStore = create<StoreState>()((set, get) => ({
     set({
       entries: newEntries,
       currentRound: nextRound,
+      currentTrump: nextTrump,
       dialog: winner ? {type: 'result', winner} : {type: 'none'},
     });
   },
@@ -163,6 +198,7 @@ export const useStore = create<StoreState>()((set, get) => ({
       await db.entries.bulkDelete(inCurrent.map((e) => e.id));
       set({
         entries: entries.filter((e) => e.roundNumber !== currentRound),
+        currentTrump: null,
         dialog: {type: 'none'},
       });
     } else if (currentRound > 1) {
@@ -172,15 +208,16 @@ export const useStore = create<StoreState>()((set, get) => ({
       set({
         entries: entries.filter((e) => e.roundNumber !== prev),
         currentRound: prev,
+        currentTrump: null,
         dialog: {type: 'none'},
       });
     } else {
-      set({dialog: {type: 'none'}});
+      set({currentTrump: null, dialog: {type: 'none'}});
     }
   },
 
   newGame: async () => {
-    const {currentGameId, goal, player1, player2, player3, player4} = get();
+    const {currentGameId, goal, player1, player2, player3, player4, trumpMultipliers} = get();
 
     if (currentGameId !== null) {
       await db.games.update(currentGameId, {finishedAt: Date.now()});
@@ -207,6 +244,8 @@ export const useStore = create<StoreState>()((set, get) => ({
       currentGameId: newGameId as number,
       entries: [],
       currentRound: 1,
+      currentTrump: null,
+      trumpMultipliers: trumpMultipliers,
       dialog: {type: 'none'},
     });
   },
@@ -215,8 +254,8 @@ export const useStore = create<StoreState>()((set, get) => ({
     set(settings as Partial<StoreState>);
 
     const merged = {...get(), ...settings};
-    const {goal, player1, player2, player3, player4, currentGameId} = merged;
-    const row = {goal, player1, player2, player3, player4};
+    const {goal, player1, player2, player3, player4, trumpMultipliers, currentGameId} = merged;
+    const row = {goal, player1, player2, player3, player4, trumpMultipliers: trumpMultipliers};
 
     const existing = await db.settings.get(1);
     if (existing) {
@@ -226,15 +265,28 @@ export const useStore = create<StoreState>()((set, get) => ({
     }
 
     if (currentGameId !== null) {
-      await db.games.update(currentGameId, row);
+      await db.games.update(currentGameId, {goal, player1, player2, player3, player4});
     }
   },
 
   openMenu: (team) => set({dialog: {type: 'mainMenu', team}}),
   openScoreInput: (team) => set({dialog: {type: 'scoreInput', team}}),
   openClaims: (team) => set({dialog: {type: 'claims', team}}),
-  openMultiplier: (team, mode, score) =>
-    set({dialog: {type: 'multiplier', team, mode, score}}),
+  openTrump: (team, next) => set({dialog: {type: 'trump', team, next}}),
+
+  selectTrump: async (trump, team, next) => {
+    set({currentTrump: trump});
+    if (next === 'menu') {
+      set({dialog: {type: 'mainMenu', team}});
+    } else if (next === 'scoreInput') {
+      set({dialog: {type: 'scoreInput', team}});
+    } else if (next === 'claims') {
+      set({dialog: {type: 'claims', team}});
+    } else if (next === 'match') {
+      await get().addScore(team, 'MATCH', MATCH_SCORE);
+    }
+  },
+
   openSettings: () => set({dialog: {type: 'settings'}}),
   openAbout: () => set({dialog: {type: 'about'}}),
   confirmNewGame: () => set({dialog: {type: 'confirmNewGame'}}),

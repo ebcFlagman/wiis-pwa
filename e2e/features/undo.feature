@@ -6,9 +6,9 @@ Feature: Rückgängig und Spielende
   Scenario: Letzte Punkte rückgängig machen
     When ich auf Team 1 tippe
     And ich "💯 Punkte eingeben" auswähle
+    And ich Trumpf "Rosen" wähle
     And ich "100" eintippe
     And ich auf "Weiter" tippe
-    And ich Multiplikator "×1" wähle
     And ich auf Team 1 tippe
     And ich "↩ Rückgängig" auswähle
     Then zeigt Team 1 "0" Punkte
@@ -17,9 +17,9 @@ Feature: Rückgängig und Spielende
   Scenario: Neues Spiel zurücksetzen
     When ich auf Team 1 tippe
     And ich "💯 Punkte eingeben" auswähle
+    And ich Trumpf "Rosen" wähle
     And ich "100" eintippe
     And ich auf "Weiter" tippe
-    And ich Multiplikator "×1" wähle
     And ich auf Team 1 tippe
     And ich "🔄 Neues Spiel" auswähle
     And ich auf "Zurücksetzen" tippe
@@ -30,6 +30,6 @@ Feature: Rückgängig und Spielende
     Given das Ziel ist auf 257 Punkte gesetzt
     When ich auf Team 1 tippe
     And ich "💥 Match (257)" auswähle
-    And ich Multiplikator "×1" wähle
+    And ich Trumpf "Rosen" wähle
     Then wird "Spiel beendet!" angezeigt
     And der Gewinner ist "Spieler 1 / Spieler 2"

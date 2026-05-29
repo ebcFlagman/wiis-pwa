@@ -1,6 +1,6 @@
 import {beforeEach, describe, expect, it} from 'vitest';
 import {db} from '@/db/db';
-import {DEFAULT_GOAL, MATCH_SCORE, MAX_WRITE_SCORE, STOCK_SCORE} from '@/types';
+import {DEFAULT_GOAL, DEFAULT_TRUMP_MULTIPLIERS, MATCH_SCORE, MAX_WRITE_SCORE, STOCK_SCORE} from '@/types';
 import {useStore} from './gameStore';
 
 const resetState = () =>
@@ -9,12 +9,14 @@ const resetState = () =>
     currentGameId: null,
     entries: [],
     currentRound: 1,
+    currentTrump: null,
     dialog: {type: 'none'},
     goal: DEFAULT_GOAL,
     player1: 'Spieler 1',
     player2: 'Spieler 2',
     player3: 'Spieler 3',
     player4: 'Spieler 4',
+    trumpMultipliers: {...DEFAULT_TRUMP_MULTIPLIERS},
   });
 
 beforeEach(async () => {
@@ -35,7 +37,7 @@ async function withGame(): Promise<number> {
     player3: 'Spieler 3',
     player4: 'Spieler 4',
   } as Parameters<typeof db.games.add>[0])) as number;
-  useStore.setState({currentGameId: id});
+  useStore.setState({currentGameId: id, currentTrump: 'Roses'}); // ×1
   return id;
 }
 
@@ -86,44 +88,46 @@ describe('getLastRoundTotal', () => {
 
 describe('addScore', () => {
   it('does nothing when currentGameId is null', async () => {
-    await useStore.getState().addScore(1, 'CLAIM', 50, 1);
+    await useStore.getState().addScore(1, 'CLAIM', 50);
     expect(useStore.getState().entries).toHaveLength(0);
   });
 
-  it('WRITE mode splits points correctly (team 1 playing)', async () => {
+  it('WRITE mode splits points correctly (team 1 playing, ×1)', async () => {
     await withGame();
-    await useStore.getState().addScore(1, 'WRITE', 100, 1);
+    await useStore.getState().addScore(1, 'WRITE', 100);
     const {entries} = useStore.getState();
     expect(entries).toHaveLength(1);
     expect(entries[0].team1Points).toBe(100);
     expect(entries[0].team2Points).toBe(MAX_WRITE_SCORE - 100);
   });
 
-  it('WRITE mode splits points correctly (team 2 playing)', async () => {
+  it('WRITE mode splits points correctly (team 2 playing, ×1)', async () => {
     await withGame();
-    await useStore.getState().addScore(2, 'WRITE', 100, 1);
+    await useStore.getState().addScore(2, 'WRITE', 100);
     const {entries} = useStore.getState();
     expect(entries[0].team2Points).toBe(100);
     expect(entries[0].team1Points).toBe(MAX_WRITE_SCORE - 100);
   });
 
-  it('WRITE mode applies multiplier', async () => {
+  it('WRITE mode applies multiplier from currentTrump', async () => {
     await withGame();
-    await useStore.getState().addScore(1, 'WRITE', 100, 2);
+    useStore.setState({currentTrump: 'Shields'}); // ×2
+    await useStore.getState().addScore(1, 'WRITE', 100);
     const {entries} = useStore.getState();
     expect(entries[0].team1Points).toBe(200);
     expect(entries[0].team2Points).toBe((MAX_WRITE_SCORE - 100) * 2);
   });
 
-  it('WRITE mode advances currentRound', async () => {
+  it('WRITE mode advances currentRound and resets currentTrump', async () => {
     await withGame();
-    await useStore.getState().addScore(1, 'WRITE', 100, 1);
+    await useStore.getState().addScore(1, 'WRITE', 100);
     expect(useStore.getState().currentRound).toBe(2);
+    expect(useStore.getState().currentTrump).toBeNull();
   });
 
   it('CLAIM mode assigns points only to the playing team', async () => {
     await withGame();
-    await useStore.getState().addScore(2, 'CLAIM', 50, 1);
+    await useStore.getState().addScore(2, 'CLAIM', 50);
     const {entries} = useStore.getState();
     expect(entries[0].team1Points).toBe(0);
     expect(entries[0].team2Points).toBe(50);
@@ -132,16 +136,17 @@ describe('addScore', () => {
 
   it('STOCK mode assigns STOCK_SCORE only to the playing team', async () => {
     await withGame();
-    await useStore.getState().addScore(1, 'STOCK', 0, 1);
+    await useStore.getState().addScore(1, 'STOCK', 0);
     const {entries} = useStore.getState();
     expect(entries[0].team1Points).toBe(STOCK_SCORE);
     expect(entries[0].team2Points).toBe(0);
     expect(useStore.getState().currentRound).toBe(1);
   });
 
-  it('STOCK mode applies multiplier', async () => {
+  it('STOCK mode applies multiplier from currentTrump', async () => {
     await withGame();
-    await useStore.getState().addScore(2, 'STOCK', 0, 3);
+    useStore.setState({currentTrump: 'TopDown'}); // ×3
+    await useStore.getState().addScore(2, 'STOCK', 0);
     const {entries} = useStore.getState();
     expect(entries[0].team2Points).toBe(STOCK_SCORE * 3);
     expect(entries[0].team1Points).toBe(0);
@@ -149,13 +154,13 @@ describe('addScore', () => {
 
   it('STOCK mode does not advance currentRound', async () => {
     await withGame();
-    await useStore.getState().addScore(1, 'STOCK', 0, 1);
+    await useStore.getState().addScore(1, 'STOCK', 0);
     expect(useStore.getState().currentRound).toBe(1);
   });
 
   it('MATCH mode uses MATCH_SCORE constant', async () => {
     await withGame();
-    await useStore.getState().addScore(1, 'MATCH', 0, 1);
+    await useStore.getState().addScore(1, 'MATCH', 0);
     expect(useStore.getState().entries[0].team1Points).toBe(MATCH_SCORE);
     expect(useStore.getState().entries[0].team2Points).toBe(0);
   });
@@ -163,7 +168,7 @@ describe('addScore', () => {
   it('sets winner dialog when a team reaches the goal', async () => {
     await withGame();
     useStore.setState({goal: 100});
-    await useStore.getState().addScore(1, 'CLAIM', 100, 1);
+    await useStore.getState().addScore(1, 'CLAIM', 100);
     const {dialog} = useStore.getState();
     expect(dialog.type).toBe('result');
     if (dialog.type === 'result') expect(dialog.winner).toBe(1);
@@ -171,7 +176,7 @@ describe('addScore', () => {
 
   it('persists entry to the database', async () => {
     const gameId = await withGame();
-    await useStore.getState().addScore(1, 'CLAIM', 60, 1);
+    await useStore.getState().addScore(1, 'CLAIM', 60);
     const dbEntries = await db.entries.where('gameId').equals(gameId).toArray();
     expect(dbEntries).toHaveLength(1);
     expect(dbEntries[0].team1Points).toBe(60);
@@ -227,6 +232,13 @@ describe('undo', () => {
     await useStore.getState().undo();
     expect(useStore.getState().dialog.type).toBe('none');
   });
+
+  it('resets currentTrump on undo', async () => {
+    await withGame();
+    useStore.setState({currentTrump: 'Shields'});
+    await useStore.getState().undo();
+    expect(useStore.getState().currentTrump).toBeNull();
+  });
 });
 
 // ─── newGame ───────────────────────────────────────────────────────────────
@@ -276,9 +288,9 @@ describe('dialog actions', () => {
     expect(useStore.getState().dialog).toEqual({type: 'claims', team: 1});
   });
 
-  it('openMultiplier sets dialog with mode and score', () => {
-    useStore.getState().openMultiplier(2, 'CLAIM', 80);
-    expect(useStore.getState().dialog).toEqual({type: 'multiplier', team: 2, mode: 'CLAIM', score: 80});
+  it('openTrump sets dialog to trump with next action', () => {
+    useStore.getState().openTrump(2, 'scoreInput');
+    expect(useStore.getState().dialog).toEqual({type: 'trump', team: 2, next: 'scoreInput'});
   });
 
   it('openSettings sets dialog to settings', () => {
