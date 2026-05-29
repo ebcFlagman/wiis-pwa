@@ -101,26 +101,26 @@
       "matchUpdateTypes": [
         "patch"
       ],
-      "excludePackageNames": [
-        "react",
-        "react-dom",
-        "@types/react",
-        "@types/react-dom",
-        "vite",
-        "@vitejs/plugin-react",
-        "vite-plugin-pwa",
-        "vitest",
-        "tailwindcss",
-        "@tailwindcss/vite",
-        "@tailwindcss/postcss",
-        "eslint",
-        "@eslint/js",
-        "typescript-eslint",
-        "eslint-plugin-react-hooks",
-        "eslint-plugin-react-refresh",
-        "typescript"
-      ],
-      "automerge": true
+      "automerge": true,
+      "matchPackageNames": [
+        "!react",
+        "!react-dom",
+        "!@types/react",
+        "!@types/react-dom",
+        "!vite",
+        "!@vitejs/plugin-react",
+        "!vite-plugin-pwa",
+        "!vitest",
+        "!tailwindcss",
+        "!@tailwindcss/vite",
+        "!@tailwindcss/postcss",
+        "!eslint",
+        "!@eslint/js",
+        "!typescript-eslint",
+        "!eslint-plugin-react-hooks",
+        "!eslint-plugin-react-refresh",
+        "!typescript"
+      ]
     },
     {
       "description": "Group Playwright and playwright-bdd because they must stay compatible",
