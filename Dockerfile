@@ -28,7 +28,7 @@ RUN npm run build
 ##################
 
 # base image
-FROM nginxinc/nginx-unprivileged:1.31.1-alpine3.23
+FROM nginxinc/nginx-unprivileged:1.31.2-alpine3.23
 
 # copy nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
